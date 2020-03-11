@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
-
-import PostContext from "./postContext";
+import { useDispatch } from "react-redux";
+import { addPost, editPost } from './action';
 
 const INITIAL_STATE = {
   title: "",
@@ -10,10 +10,13 @@ const INITIAL_STATE = {
   body: "",
 }
 
-function PostForm({ post = INITIAL_STATE, editing = false, setEditing }) {
+function PostForm({ post = INITIAL_STATE, editing = false, setEditing, postId}) {
   const [formData, setFormData] = useState(post);
-  const { addPost, editPost } = useContext(PostContext);
+  const dispatch = useDispatch();
   const history = useHistory();
+
+  const add = (formData) => dispatch(addPost(formData));
+  const edit = (postId, data) => dispatch(editPost(postId, data));
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -23,17 +26,15 @@ function PostForm({ post = INITIAL_STATE, editing = false, setEditing }) {
   const handleSubmit = evt => {
     evt.preventDefault();
     if (editing) {
-      editPost(post.id, formData);
+      edit(postId, formData);
       setFormData(INITIAL_STATE);
       setEditing(false);
     } else {
-      addPost(formData);
+      add(formData);
       setFormData(INITIAL_STATE);
       history.push('/');
     }
   }
-
-
 
   const cancel = () => {
     history.push('/');

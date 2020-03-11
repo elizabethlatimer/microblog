@@ -1,15 +1,20 @@
-import React, { useContext, useState } from 'react';
-import PostContext from './postContext';
+import React, { useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { deletePost, addComment, deleteComment} from './action'
 import Post from './Post';
 import PostForm from './PostForm';
+import Comments from './Comments';
 
-function PostDetail({cantFind}) {
+function PostDetail() {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const [editing, setEditing] = useState(false);
-  const { posts, deletePost } = useContext(PostContext);
+  const post = useSelector(st => st.posts[id]);
 
-  const post = (posts.filter(post => post.id === id))[0];
+  const deletePostFn = (id) => dispatch(deletePost(id));
+  const addCmt = (id, comment) => dispatch(addComment(id, comment));
+  const deleteCmt = (id, commentId) => dispatch(deleteComment(id, commentId));
 
   if (!post) {
     return <Redirect exact to='/' />
@@ -18,9 +23,18 @@ function PostDetail({cantFind}) {
   return (
     <div className="PostDetail">
       {editing
-      ? <PostForm post={post} editing="true" setEditing={setEditing}/>
-      : <Post post={post}  setEditing={setEditing} deletePost={deletePost}/>
-}
+      ? <PostForm post={post}
+                  editing="true"
+                  setEditing={setEditing}
+                  postId={id}/>
+        : <Post post={post}
+                setEditing={setEditing}
+                deletePost={deletePostFn}
+                postId={id}/>}
+      <hr />
+      <Comments comments={post.comments}
+                add={addCmt}
+                remove={deleteCmt}/>
     </div>
   )
 }

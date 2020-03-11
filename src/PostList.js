@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PostCard from './PostCard';
-import PostContext from './postContext';
+import { useSelector } from "react-redux";
 
 function PostList() {
-  const {posts} = useContext(PostContext);
+  const posts = useSelector(st => st.posts)
 
   return (
     <div className="PostList">
-      {posts.map(post => {
-        return (<PostCard key={post.id} post={post} />)
+      {Object.keys(posts).map(postId => {
+        console.log(postId);
+        return (<PostCard key={postId} post={posts[postId]} id={postId}/>)
       })}
     </div>
   )

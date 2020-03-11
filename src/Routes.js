@@ -15,7 +15,7 @@ function Routes() {
         <PostForm />
       </Route>
       <Route exact path='/post/:id'>
-        <PostDetail cantFind="/"/>
+        <PostDetail />
       </Route>
     </Switch>
   )
