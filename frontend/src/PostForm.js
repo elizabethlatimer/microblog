@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { useDispatch } from "react-redux";
-import { addPost, editPost } from './action';
+import { addPost, editPost } from './actions';
 
 const INITIAL_STATE = {
   title: "",
@@ -36,9 +36,8 @@ function PostForm({ post = INITIAL_STATE, editing = false, setEditing, postId}) 
     }
   }
 
-  const cancel = () => {
-    history.push('/');
-  }
+  const cancel = () => history.push('/');
+
 
   return (
     <div className="PostForm">
@@ -54,7 +53,7 @@ function PostForm({ post = INITIAL_STATE, editing = false, setEditing, postId}) 
         </FormGroup>
         <FormGroup>
           <Label htmlFor="body">Body:</Label>
-          <Input type="textarea" id="body" name="body" value={formData.body} rows='5' onChange={handleChange} />
+          <Input type="textarea" id="body" name="body" rows='5' value={formData.body} onChange={handleChange} />
         </FormGroup>
         <Button color='primary' type='submit'>Save</Button>
         <Button color='secondary' type='button' onClick={cancel}>Cancel</Button>

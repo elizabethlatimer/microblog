@@ -23,9 +23,9 @@ function Comments({ comments, add, remove }) {
       <h3>Comments</h3>
       {comments.map(comment => {
         return (
-          <div key={comment.commentId}>
-            <p>{comment.comment}</p>
-            <Button onClick={()=> remove(id, comment.commentId)}>
+          <div key={comment.id}>
+            <p>{comment.text}</p>
+            <Button onClick={()=> remove(id, comment.id)}>
               <i className="far fa-trash-alt"></i>
             </Button>
           </div>

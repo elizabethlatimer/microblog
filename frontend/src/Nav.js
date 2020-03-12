@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { Card,
          CardTitle,
          CardBody,
-         CardText,
-         NavItem} from 'reactstrap';
+         CardText} from 'reactstrap';
+import './Nav.css'
 
 function Nav() {
   return (
@@ -12,12 +12,8 @@ function Nav() {
       <CardBody>
         <CardTitle>Microblog</CardTitle>
         <CardText>Get in the Rithm of blogging!</CardText>
-        <NavItem>
-          <NavLink to="/">Blog</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/new">Add a new post</NavLink>
-        </NavItem>
+          <NavLink className="NavBlog" to="/">Blog</NavLink>
+          <NavLink className="NavBlog" to="/new">Add a new post</NavLink>
       </CardBody>
     </Card>
   )
