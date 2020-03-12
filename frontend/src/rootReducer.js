@@ -55,12 +55,16 @@ function rootReducer(state = INITIAL_STATE, action) {
       }
       let editedTitles = state.titles.map(title =>
         title.id === postId
-        ? {
-          ...title, title: action.payload.title,
-          description: action.payload.description
-        }
-        :title)
-      return { ...state, posts: { ...state.posts, [postId]: edit }, titles: editedTitles };
+          ? {
+            ...title, title: action.payload.title,
+            description: action.payload.description
+          }
+          : title)
+      return {
+        ...state,
+        posts: { ...state.posts, [postId]: edit },
+        titles: editedTitles
+      };
 
     case ADD_COMMENT:
       let postToComment = state.posts[postId];
@@ -72,7 +76,10 @@ function rootReducer(state = INITIAL_STATE, action) {
           id: action.payload.id
         }]
       };
-      return { ...state, posts: { ...state.posts, [postId]: addComment } };
+      return {
+        ...state,
+        posts: { ...state.posts, [postId]: addComment }
+      };
 
     case DELETE_COMMENT:
       let oldComments = state.posts[postId].comments;
@@ -87,10 +94,13 @@ function rootReducer(state = INITIAL_STATE, action) {
           }
         }
       };
+
     case SHOW_ERR:
       return { ...state, error: true };
+
     case CLEAR_ERR:
       return { ...state, error: false }
+
     default:
       return state;
   }

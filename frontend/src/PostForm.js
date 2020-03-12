@@ -45,15 +45,28 @@ function PostForm({ post = INITIAL_STATE, editing = false, setEditing, postId}) 
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label htmlFor="title">Title:</Label>
-          <Input type="text" id="title" name="title" value={formData.title} onChange={handleChange} />
+          <Input type="text"
+                 id="title"
+                 name="title"
+                 value={formData.title}
+                 onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="description">Description:</Label>
-          <Input type="text" id="description" name="description" value={formData.description} onChange={handleChange} />
+          <Input type="text"
+                 id="description"
+                 name="description"
+                 value={formData.description}
+                 onChange={handleChange} />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="body">Body:</Label>
-          <Input type="textarea" id="body" name="body" rows='5' value={formData.body} onChange={handleChange} />
+          <Input type="textarea"
+                 id="body"
+                 name="body"
+                 rows='5'
+                 value={formData.body}
+                 onChange={handleChange} />
         </FormGroup>
         <Button color='primary' type='submit'>Save</Button>
         <Button color='secondary' type='button' onClick={cancel}>Cancel</Button>

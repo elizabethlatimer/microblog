@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   LOAD_POSTS,
   LOAD_POST_DETAIL,
@@ -9,7 +10,6 @@ import {
   SHOW_ERR,
   CLEAR_ERR
 } from './actionTypes';
-import axios from 'axios';
 
 const API_URL = "http://localhost:5000/api/posts";
 
@@ -31,7 +31,6 @@ export function loadPostDetailFromAPI(postId) {
     dispatch(gotPostDetail(res.data));
     } catch (err) {
       dispatch(showErr(err));
-
     }
   }
 }
@@ -62,7 +61,6 @@ export function deletePostToBackEnd(postId) {
 }
 
 function deletePost(postId) {
-
   return {
     type: DELETE_POST,
     payload: { postId: postId }
@@ -77,7 +75,6 @@ export function editPostToBackEnd(postId, formData) {
 }
 
 function editPost(postId, formData) {
-
   return {
     type: EDIT_POST,
     payload: { ...formData, postId: postId }
@@ -85,7 +82,6 @@ function editPost(postId, formData) {
 }
 
 export function addCommentToPost(postId, newComment) {
-
   return async function (dispatch) {
     let res = await axios.post(`${API_URL}/${postId}/comments`, newComment);
     dispatch(addComment(postId, res.data));
@@ -93,7 +89,6 @@ export function addCommentToPost(postId, newComment) {
 }
 
 function addComment(postId, newComment) {
-
   return {
     type: ADD_COMMENT,
     payload: { ...newComment, postId }
@@ -108,7 +103,6 @@ export function deleteCommentToBackEnd(postId, commentId) {
 }
 
 function deleteComment(postId, commentId) {
-
   return {
     type: DELETE_COMMENT,
     payload: { postId, commentId }
