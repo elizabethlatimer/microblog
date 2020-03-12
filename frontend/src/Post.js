@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'reactstrap';
 
 function Post({ post, setEditing, deletePost, postId }) {
+  
   return (
     <div className="Post">
       <h1>{post.title}</h1>

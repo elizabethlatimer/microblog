@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { useDispatch } from "react-redux";
-import { addPost, editPost } from './actions';
+import { addPostToBackEnd, editPostToBackEnd } from './actions';
 
 const INITIAL_STATE = {
   title: "",
@@ -15,8 +15,8 @@ function PostForm({ post = INITIAL_STATE, editing = false, setEditing, postId}) 
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const add = (formData) => dispatch(addPost(formData));
-  const edit = (postId, data) => dispatch(editPost(postId, data));
+  const add = (formData) => dispatch(addPostToBackEnd(formData));
+  const edit = (postId, data) => dispatch(editPostToBackEnd(postId, data));
 
   const handleChange = evt => {
     const { name, value } = evt.target;

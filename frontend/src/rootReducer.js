@@ -10,7 +10,7 @@ import {
   CLEAR_ERR
 } from './actionTypes';
 
-const INITIAL_STATE = { posts: {}, titles: [], error:false };
+const INITIAL_STATE = { posts: {}, titles: [], error: false };
 
 function rootReducer(state = INITIAL_STATE, action) {
   let postId = action.payload ? action.payload.postId : null;
@@ -25,23 +25,25 @@ function rootReducer(state = INITIAL_STATE, action) {
         posts: {
           ...state.posts,
           [action.payload.id]: action.payload
-        }
+        },
       };
 
     case ADD_POST:
-      let { title, description, body, comments } = action.payload;
+      let { id, title, description, body } = action.payload;
       return {
         ...state,
         posts: {
           ...state.posts,
-          [postId]: { title, description, body, comments }
-        }
+          [postId]: { id, title, description, body }
+        },
+        titles: [...state.titles, { id, title, description }]
       };
 
     case DELETE_POST:
       let postsCopy = { ...state.posts };
       delete postsCopy[postId]
-      return { ...state, posts: postsCopy };
+      let newTitles = state.titles.filter(title => title.id !== postId);
+      return { ...state, posts: postsCopy, titles: newTitles };
 
     case EDIT_POST:
       let postToEdit = state.posts[postId];
@@ -51,7 +53,14 @@ function rootReducer(state = INITIAL_STATE, action) {
         description: action.payload.description,
         body: action.payload.body
       }
-      return { ...state, posts: { ...state.posts, [postId]: edit } };
+      let editedTitles = state.titles.map(title =>
+        title.id === postId
+        ? {
+          ...title, title: action.payload.title,
+          description: action.payload.description
+        }
+        :title)
+      return { ...state, posts: { ...state.posts, [postId]: edit }, titles: editedTitles };
 
     case ADD_COMMENT:
       let postToComment = state.posts[postId];
@@ -59,8 +68,8 @@ function rootReducer(state = INITIAL_STATE, action) {
         ...postToComment,
         comments: [...postToComment.comments,
         {
-          comment: action.payload.comment,
-          commentId: action.payload.commentId
+          text: action.payload.text,
+          id: action.payload.id
         }]
       };
       return { ...state, posts: { ...state.posts, [postId]: addComment } };
@@ -68,7 +77,7 @@ function rootReducer(state = INITIAL_STATE, action) {
     case DELETE_COMMENT:
       let oldComments = state.posts[postId].comments;
       let editedComments = oldComments.filter(comment => {
-        return comment.commentId !== action.payload.commentId
+        return comment.id !== action.payload.commentId
       });
       return {
         ...state, posts: {
@@ -79,9 +88,9 @@ function rootReducer(state = INITIAL_STATE, action) {
         }
       };
     case SHOW_ERR:
-      return {...state, error:true};
+      return { ...state, error: true };
     case CLEAR_ERR:
-      return {...state, error: false}
+      return { ...state, error: false }
     default:
       return state;
   }

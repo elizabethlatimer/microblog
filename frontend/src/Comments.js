@@ -5,7 +5,7 @@ import { Form, FormGroup, Input, Button } from 'reactstrap';
 function Comments({ comments, add, remove }) {
 
   const { id } = useParams();
-  const [formData, setFormData] = useState({comment: ""});
+  const [formData, setFormData] = useState({text: ""});
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -15,7 +15,7 @@ function Comments({ comments, add, remove }) {
   const handleSubmit = evt => {
     evt.preventDefault();
     add(id, formData);
-    setFormData({comment: ""});
+    setFormData({text: ""});
   }
 
   return (
@@ -34,9 +34,9 @@ function Comments({ comments, add, remove }) {
     <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Input type="text"
-                 id="comment"
-                 name="comment"
-                 value={formData.comment}
+                 id="text"
+                 name="text"
+                 value={formData.text}
                  placeholder= "New Comment"
                  onChange={handleChange} />
         </FormGroup>

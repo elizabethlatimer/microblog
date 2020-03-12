@@ -28,7 +28,6 @@ export function loadPostDetailFromAPI(postId) {
   return async function (dispatch) {
     try {
     let res = await axios.get(`${API_URL}/${postId}`);
-    console.log(res)
     dispatch(gotPostDetail(res.data));
     } catch (err) {
       dispatch(showErr(err));
@@ -41,14 +40,28 @@ function gotPostDetail(post) {
   return {type: LOAD_POST_DETAIL, payload: post};
 }
 
-export function addPost(newPost) {
+export function addPostToBackEnd(newPost) {
+  return async function(dispatch) {
+    let res = await axios.post(`${API_URL}`, newPost);
+    dispatch(addPost(res.data));
+  }
+}
+
+function addPost(newPost) {
   return {
     type: ADD_POST,
     payload: newPost
   }
 }
 
-export function deletePost(postId) {
+export function deletePostToBackEnd(postId) {
+  return async function (dispatch) {
+    await axios.delete(`${API_URL}/${postId}`);
+    dispatch(deletePost(postId));
+  }
+}
+
+function deletePost(postId) {
 
   return {
     type: DELETE_POST,
@@ -56,7 +69,14 @@ export function deletePost(postId) {
   }
 }
 
-export function editPost(postId, formData) {
+export function editPostToBackEnd(postId, formData) {
+  return async function (dispatch) {
+    await axios.put(`${API_URL}/${postId}`, formData);
+    dispatch(editPost(postId, formData));
+  }
+}
+
+function editPost(postId, formData) {
 
   return {
     type: EDIT_POST,
@@ -64,7 +84,15 @@ export function editPost(postId, formData) {
   }
 }
 
-export function addComment(postId, newComment) {
+export function addCommentToPost(postId, newComment) {
+
+  return async function (dispatch) {
+    let res = await axios.post(`${API_URL}/${postId}/comments`, newComment);
+    dispatch(addComment(postId, res.data));
+  }
+}
+
+function addComment(postId, newComment) {
 
   return {
     type: ADD_COMMENT,
@@ -72,7 +100,14 @@ export function addComment(postId, newComment) {
   }
 }
 
-export function deleteComment(postId, commentId) {
+export function deleteCommentToBackEnd(postId, commentId) {
+  return async function (dispatch) {
+    await axios.delete(`${API_URL}/${postId}/comments/${commentId}`);
+    dispatch(deleteComment(postId, commentId));
+  }
+}
+
+function deleteComment(postId, commentId) {
 
   return {
     type: DELETE_COMMENT,
