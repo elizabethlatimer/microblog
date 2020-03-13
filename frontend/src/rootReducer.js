@@ -68,7 +68,6 @@ function rootReducer(state = INITIAL_STATE, action) {
       };
 
     case VOTE:
-      console.log(state.posts)
       let voteChange = state.titles.map(title =>
         title.id === postId
           ? {

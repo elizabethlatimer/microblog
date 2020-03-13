@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Form, FormGroup, Input, Button } from 'reactstrap';
+import { Form, InputGroupAddon, InputGroup, Input, Button } from 'reactstrap';
+import './Comments.css'
 
 function Comments({ comments, add, remove }) {
 
   const { id } = useParams();
-  const [formData, setFormData] = useState({text: ""});
+  const [formData, setFormData] = useState({ text: "" });
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -15,7 +16,7 @@ function Comments({ comments, add, remove }) {
   const handleSubmit = evt => {
     evt.preventDefault();
     add(id, formData);
-    setFormData({text: ""});
+    setFormData({ text: "" });
   }
 
   return (
@@ -24,24 +25,28 @@ function Comments({ comments, add, remove }) {
       {comments.map(comment => {
         return (
           <div key={comment.id}>
-            <p>{comment.text}</p>
-            <Button onClick={()=> remove(id, comment.id)}>
-              <i className="far fa-trash-alt"></i>
-            </Button>
+            <p>
+              <span>
+                <i className="far fa-trash-alt"
+                  onClick={() => remove(id, comment.id)}></i>
+              </span> {comment.text}</p>
+
           </div>
         )
       })}
-    <Form onSubmit={handleSubmit}>
-        <FormGroup>
+      <Form onSubmit={handleSubmit}>
+        <InputGroup>
           <Input type="text"
-                 id="text"
-                 name="text"
-                 value={formData.text}
-                 placeholder= "New Comment"
-                 onChange={handleChange} />
-        </FormGroup>
-        <Button color='primary' type='submit'>Save</Button>
-    </Form>
+            id="text"
+            name="text"
+            value={formData.text}
+            placeholder="New Comment"
+            onChange={handleChange} />
+          <InputGroupAddon addonType="append">
+            <Button color='primary' type='submit'>Save</Button>
+          </InputGroupAddon>
+        </InputGroup>
+      </Form>
     </div>
   )
 }

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button, Container } from 'reactstrap';
 import { useDispatch } from "react-redux";
 import { addPostToBackEnd, editPostToBackEnd } from './actions';
+import './PostForm.css';
 
 const INITIAL_STATE = {
   title: "",
@@ -40,7 +41,7 @@ function PostForm({ post = INITIAL_STATE, editing = false, setEditing, postId}) 
 
 
   return (
-    <div className="PostForm">
+    <Container className="PostForm">
       <h2>New Post</h2>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -68,10 +69,10 @@ function PostForm({ post = INITIAL_STATE, editing = false, setEditing, postId}) 
                  value={formData.body}
                  onChange={handleChange} />
         </FormGroup>
-        <Button color='primary' type='submit'>Save</Button>
+        <Button color='primary' type='submit'>Save</Button>{'   '}
         <Button color='secondary' type='button' onClick={cancel}>Cancel</Button>
       </Form>
-    </div>
+    </Container>
   )
 }
 

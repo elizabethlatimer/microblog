@@ -1,26 +1,39 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import './Post.css'
 
 function Post({ post, setEditing, deletePost, postId, vote }) {
 
   return (
     <div className="Post">
-      <h1>{post.title}</h1>
-      <p>{post.description}</p>
-      <p>{post.body}</p>
-      <Button onClick={() => deletePost(postId)}>
-        <i className="far fa-trash-alt"></i>
-      </Button>
-      <Button onClick={() => setEditing(true)}>
-        <i className="far fa-edit"></i>
-      </Button>
-      <span>{post.votes}</span>
-      <Button onClick={() => vote(postId, 'up')}>
-        <i className="far fa-thumbs-up"></i>
-      </Button>
-      <Button onClick={() => vote(postId, "down")}>
-        <i className="far fa-thumbs-down"></i>
-      </Button>
+      <div className="Post-header">
+        <div className="Post-intro">
+          <h1>{post.title}</h1>
+          <p>{post.description}</p>
+        </div>
+        <div className="Post-buttons">
+          <p>
+            <span onClick={() => deletePost(postId)}>
+              <i className="far fa-trash-alt fa-lg"></i>
+            </span>
+            <span onClick={() => setEditing(true)}>
+              <i className="far fa-edit fa-lg"></i>
+            </span>
+          </p>
+          <p>
+            <span>{post.votes} votes:
+            <span >
+              <i className="fas fa-thumbs-up fa-lg"
+                onClick={() => vote(postId, 'up')}></i>
+                &nbsp;
+              <i className="fas fa-thumbs-down fa-lg"
+                onClick={() => vote(postId, "down")}></i>
+            </span></span>
+          </p>
+        </div>
+      </div>
+      <div className="Post-body">
+        <p>{post.body}</p>
+      </div>
     </div>
   )
 

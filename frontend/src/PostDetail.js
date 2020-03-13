@@ -11,6 +11,7 @@ import {
   deleteCommentToBackEnd,
   vote
 } from './actions';
+import { Container } from 'reactstrap';
 
 function PostDetail() {
   const { id } = useParams();
@@ -46,7 +47,7 @@ function PostDetail() {
   if (error) {
     return <Redirect to='/notFound' />
   }
-  const loadedPage = post ? <div className="PostDetail">
+  const loadedPage = post ? <Container className="PostDetail">
     {editing
       ? <PostForm post={post}
         editing="true"
@@ -61,7 +62,7 @@ function PostDetail() {
     <Comments comments={post.comments}
       add={addCmt}
       remove={deleteCmt} />
-  </div>
+  </Container>
     : "";
 
   const loadingPage = <div>Loading post...</div>
