@@ -8,7 +8,8 @@ import {
   loadPostDetailFromAPI,
   deletePostToBackEnd,
   addCommentToPost,
-  deleteCommentToBackEnd
+  deleteCommentToBackEnd,
+  vote
 } from './actions';
 
 function PostDetail() {
@@ -27,10 +28,14 @@ function PostDetail() {
   const addCmt = (id, comment) => {
     dispatch(addCommentToPost(id, comment));
   };
-  
+
   const deleteCmt = (id, commentId) => {
     dispatch(deleteCommentToBackEnd(id, commentId))
   };
+
+  const submitVote = (postId, direction) => {
+    dispatch(vote(postId, direction));
+  }
 
   useEffect(() => {
     if (!post) {
@@ -50,7 +55,8 @@ function PostDetail() {
       : <Post post={post}
         setEditing={setEditing}
         deletePost={deletePostFn}
-        postId={id} />}
+        postId={id}
+        vote={submitVote} />}
     <hr />
     <Comments comments={post.comments}
       add={addCmt}

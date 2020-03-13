@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 
-function Post({ post, setEditing, deletePost, postId }) {
-  
+function Post({ post, setEditing, deletePost, postId, vote }) {
+
   return (
     <div className="Post">
       <h1>{post.title}</h1>
@@ -13,6 +13,13 @@ function Post({ post, setEditing, deletePost, postId }) {
       </Button>
       <Button onClick={() => setEditing(true)}>
         <i className="far fa-edit"></i>
+      </Button>
+      <span>{post.votes}</span>
+      <Button onClick={() => vote(postId, 'up')}>
+        <i className="far fa-thumbs-up"></i>
+      </Button>
+      <Button onClick={() => vote(postId, "down")}>
+        <i className="far fa-thumbs-down"></i>
       </Button>
     </div>
   )

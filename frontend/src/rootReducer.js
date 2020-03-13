@@ -68,15 +68,24 @@ function rootReducer(state = INITIAL_STATE, action) {
       };
 
     case VOTE:
+      console.log(state.posts)
+      let voteChange = state.titles.map(title =>
+        title.id === postId
+          ? {
+            ...title,
+            votes: action.payload.votes
+          }
+          : title)
       return {
         ...state,
         posts: {
           ...state.posts,
-          [state.posts[postId]]: {
+          [postId]: {
             ...state.posts[postId],
             votes: action.payload.votes
           }
-        }
+        },
+        titles: voteChange
       };
 
     case ADD_COMMENT:
