@@ -8,7 +8,8 @@ import {
   ADD_COMMENT,
   DELETE_COMMENT,
   SHOW_ERR,
-  CLEAR_ERR
+  CLEAR_ERR,
+  VOTE
 } from './actionTypes';
 
 const API_URL = "http://localhost:5000/api/posts";
@@ -27,8 +28,8 @@ function gotPosts(posts) {
 export function loadPostDetailFromAPI(postId) {
   return async function (dispatch) {
     try {
-    let res = await axios.get(`${API_URL}/${postId}`);
-    dispatch(gotPostDetail(res.data));
+      let res = await axios.get(`${API_URL}/${postId}`);
+      dispatch(gotPostDetail(res.data));
     } catch (err) {
       dispatch(showErr(err));
     }
@@ -36,11 +37,11 @@ export function loadPostDetailFromAPI(postId) {
 }
 
 function gotPostDetail(post) {
-  return {type: LOAD_POST_DETAIL, payload: post};
+  return { type: LOAD_POST_DETAIL, payload: post };
 }
 
 export function addPostToBackEnd(newPost) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     let res = await axios.post(`${API_URL}`, newPost);
     dispatch(addPost(res.data));
   }
@@ -109,10 +110,25 @@ function deleteComment(postId, commentId) {
   }
 }
 
+export function vote(postId, direction) {
+  console.log(postId, direction)
+  return async function (dispatch) {
+    let res = await axios.post(`${API_URL}/${postId}/vote/${direction}`);
+    dispatch(submitVote(postId, res.data.votes));
+  }
+}
+
+function submitVote(postId, votes) {
+  return {
+    type: VOTE,
+    payload: { postId, votes }
+  }
+}
+
 function showErr(err) {
-  return {type: SHOW_ERR, payload: err}
+  return { type: SHOW_ERR, payload: err }
 }
 
 export function clearError() {
-  return {type: CLEAR_ERR};
+  return { type: CLEAR_ERR };
 }

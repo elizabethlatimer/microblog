@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PostCard from './PostCard';
 import { useSelector, useDispatch } from "react-redux";
-import { loadPostsFromAPI } from './actions';
+import { loadPostsFromAPI, vote } from './actions';
 
 function PostList() {
   const dispatch = useDispatch();
@@ -11,11 +11,15 @@ function PostList() {
     dispatch(loadPostsFromAPI());
   }, [dispatch]);
 
+  const submitVote = (postId, direction) => {
+    dispatch(vote(postId, direction));
+  }
+
   return (
     <div className="PostList">
       {titles.length
         ? titles.map(post => {
-          return (<PostCard key={post.id} post={post} />)
+          return (<PostCard key={post.id} post={post} vote={submitVote} />)
         })
         : <h3>Loading Posts...</h3>
       }

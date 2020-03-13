@@ -7,3 +7,4 @@ export const ADD_COMMENT = "ADD_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 export const SHOW_ERR = "SHOW_ERR";
 export const CLEAR_ERR = "CLEAR_ERR";
+export const VOTE = "VOTE";

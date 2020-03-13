@@ -7,7 +7,8 @@ import {
   ADD_COMMENT,
   DELETE_COMMENT,
   SHOW_ERR,
-  CLEAR_ERR
+  CLEAR_ERR,
+  VOTE
 } from './actionTypes';
 
 const INITIAL_STATE = { posts: {}, titles: [], error: false };
@@ -64,6 +65,18 @@ function rootReducer(state = INITIAL_STATE, action) {
         ...state,
         posts: { ...state.posts, [postId]: edit },
         titles: editedTitles
+      };
+
+    case VOTE:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [state.posts[postId]]: {
+            ...state.posts[postId],
+            votes: action.payload.votes
+          }
+        }
       };
 
     case ADD_COMMENT:
